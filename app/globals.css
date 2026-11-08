@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --background: #090b12;
+  --panel: #111522;
+  --muted: #8b93a7;
+  --line: rgba(255,255,255,.09);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(91, 75, 210, .18), transparent 38%),
+    radial-gradient(ellipse at 90% 10%, rgba(20, 160, 180, .10), transparent 32%),
+    var(--background);
+  color: #f5f6fb;
+  font-family: Arial, Helvetica, sans-serif;
+}
+button, textarea { font: inherit; }
