@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { analyzeOpportunity } from "@/lib/openai";
+import { analyzeOpportunity } from "@/lib/gemini";
 
 const requestSchema = z.object({
   opportunityText: z.string().trim().min(40, "Paste at least 40 characters.").max(12000),
