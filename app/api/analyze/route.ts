@@ -3,8 +3,9 @@ import { z } from "zod";
 import { analyzeOpportunity } from "@/lib/gemini";
 
 const requestSchema = z.object({
-  opportunityText: z.string().trim().min(40, "Paste at least 40 characters.").max(12000),
-});
+    opportunityText: z.string().trim().min(40, "Paste at least 40 characters.").max(12000),
+      profile: z.string().max(5000).optional().default(""),
+      });
 
 export async function POST(request: Request) {
   try {
@@ -18,7 +19,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const analysis = await analyzeOpportunity(parsed.data.opportunityText);
+    const analysis = await analyzeOpportunity(
+        parsed.data.opportunityText,
+          parsed.data.profile
+          );
     return NextResponse.json({ analysis });
   } catch (error) {
     console.error("ANALYZE ERROR:", error);

@@ -29,8 +29,10 @@ async function generateWithRetry(ai: GoogleGenAI, prompt: string) {
 }
 
 export async function analyzeOpportunity(
-  sourceText: string
-): Promise<OpportunityAnalysis> {
+    sourceText: string,
+      profile: string = ""
+      ): Promise<OpportunityAnalysis> {
+
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY is not configured. Add it to .env.local.");
   }
@@ -49,11 +51,32 @@ Do not claim that a user is eligible without enough profile information.
 Return valid JSON with exactly these keys:
 title, summary, reward, deadline, eligibility, requirements,
 missing_requirements, recommended_actions, submission_checklist,
-content_ideas.
+content_ideas, opportunity_score, score_reason, match_percentage, matched_skills, skill_gaps.
 
 All list fields must be arrays of strings.
+opportunity_score must be an integer from 0 to 100.
+score_reason must briefly explain the score using facts in the opportunity brief.
+
+Score the opportunity itself, not the user's personal eligibility.
+match_percentage must be an integer from 0 to 100.
+matched_skills and skill_gaps must be arrays of strings.
+Use only skills explicitly supported by the opportunity text; do not invent user skills.
+Use this rubric:
+- Clear requirements and eligibility: 0-25
+- Reward value and transparency: 0-25
+- Feasibility and time available: 0-25
+- Credibility and clarity of the opportunity: 0-25
+Do not invent missing facts. Give lower scores when important details are missing.
+A high opportunity score does not mean the user is eligible.
 Eligibility must be one of:
 Likely eligible, Potentially eligible, Not enough information, Likely ineligible.
+
+USER PROFILE:
+${profile || "Not provided"}
+
+Use this profile only to assess the user's skill match.
+Do not invent skills or experience.
+Explain which skills match and which skills are missing.
 
 OPPORTUNITY TEXT:
 ${sourceText}

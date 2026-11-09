@@ -11,6 +11,12 @@ export const analysisSchema = z.object({
   recommended_actions: z.array(z.string()),
   submission_checklist: z.array(z.string()),
   content_ideas: z.array(z.string()),
+  opportunity_score: z.number().int().min(0).max(100),
+  score_reason: z.string(),
+  match_percentage: z.number().int().min(0).max(100),
+  matched_skills: z.array(z.string()),
+  skill_gaps: z.array(z.string()),
+
 });
 
 export type OpportunityAnalysis = z.infer<typeof analysisSchema>;
