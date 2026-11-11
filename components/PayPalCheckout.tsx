@@ -56,7 +56,7 @@ export default function PayPalCheckout() {
 
             const result = await response.json();
 
-            if (!response.ok) {
+            if (!response.ok || result.status !== "COMPLETED") {
               throw new Error(result.error || "Payment capture failed");
             }
 
