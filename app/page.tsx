@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Analyzer from "@/components/Analyzer";
+import ContentGenerator from "@/components/ContentGenerator";
+import SubmissionAssistant from "@/components/SubmissionAssistant";
 
 const stats = [
   ["01", "Paste an opportunity", "Bounties, ambassador campaigns, grants or Web3 jobs"],
@@ -35,6 +37,8 @@ export default function Home() {
       </div>
 
       <Analyzer />
+      <ContentGenerator />
+            <SubmissionAssistant />
 
       <footer className="mt-12 border-t border-white/10 pt-6 text-xs text-slate-500">
         Abuldst AI Bounty Copilot · AI-generated guidance should be checked against the original campaign rules.

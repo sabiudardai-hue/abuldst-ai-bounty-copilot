@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { OpportunityAnalysis } from "@/lib/analysis-schema";
+import PayPalCheckout from "./PayPalCheckout";
 
 const example = `We are looking for community ambassadors to support our Web3 ecosystem.
 Requirements: an active X account, publish two original posts per week, join our Discord,
@@ -157,6 +158,7 @@ export default function Analyzer() {
           </div>
         )}
       </div>
+      <div className="lg:col-span-2"><PayPalCheckout /></div>
     </section>
   );
 }

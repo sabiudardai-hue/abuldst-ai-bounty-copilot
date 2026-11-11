@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.52.0",
+    "@paypal/react-paypal-js": "^10.6.1",
     "next": "15.5.6",
     "openai": "^7.53.0",
     "react": "19.1.1",

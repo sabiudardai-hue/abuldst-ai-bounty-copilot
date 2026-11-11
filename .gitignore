@@ -9,3 +9,7 @@ out
 
 # TypeScript build cache
 *.tsbuildinfo
+
+# Local secrets
+.env.local
+.env.*.local

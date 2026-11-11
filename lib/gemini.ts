@@ -97,3 +97,56 @@ ${sourceText}
 
   return analysisSchema.parse(parsed);
 }
+
+export async function generateCampaignContent(
+  sourceText: string,
+  profile: string = ""
+) {
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not configured.");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
+
+  const prompt = `
+You are Abuldst AI Bounty Copilot, a professional Web3 content strategist.
+
+Create useful campaign content using only the facts provided below.
+Never invent campaign details, rewards, deadlines, or completed tasks.
+
+CAMPAIGN BRIEF:
+${sourceText}
+
+USER PROFILE:
+${profile || "Not provided"}
+
+Return valid JSON with exactly these keys:
+{
+  "x_post": "One engaging ready-to-publish X post",
+  "thread": ["Thread post 1", "Thread post 2", "Thread post 3", "Thread post 4"],
+  "meme_ideas": ["Meme idea 1", "Meme idea 2", "Meme idea 3"]
+}
+
+Rules:
+- Include all mandatory campaign tags, hashtags and token symbols.
+- Keep the X post concise and engaging.
+- Make the thread informative and natural.
+- Make meme ideas relevant to the campaign.
+- Do not claim the user completed tasks they have not completed.
+- Do not make financial promises or guarantee rewards.
+- Return JSON only.
+`;
+
+  const response = await generateWithRetry(ai, prompt);
+  const raw = response.text;
+
+  if (!raw) {
+    throw new Error("Gemini returned an empty content response.");
+  }
+
+  try {
+    return JSON.parse(raw);
+  } catch {
+    throw new Error("Gemini returned invalid content JSON.");
+  }
+}
